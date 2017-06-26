@@ -1,18 +1,29 @@
 version: '2'
 services:
-  mysql:
-    build: ./mysql
+  mysql55:
+    build: ./mysql55
+    ports:
+      - '3307:3306'
     environment:
       MYSQL_ROOT_PASSWORD: pass
     volumes:
-      - db:/var/lib/mysql
+      - ./db55:/var/lib/mysql
+  # mysql:
+  #   build: ./mysql
+  #   ports:
+  #     - '3306:3306'
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: pass
+  #   volumes:
+  #     - db:/var/lib/mysql
   php:
     build: ./php
     ports:
       - '80:80'
     volumes:
       - ./html:/var/www/html
+      - ./php/php.ini:/usr/local/etc/php/php.ini
     depends_on:
-      - mysql
+      - mysql55
 volumes:
   db:
